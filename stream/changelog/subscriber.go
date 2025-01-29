@@ -3,8 +3,8 @@ package changelog
 import (
 	"fmt"
 
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/stream/types"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/stream/types"
 )
 
 var _ types.Subscriber[proto.ChangelogEntry] = (*Subscriber)(nil)

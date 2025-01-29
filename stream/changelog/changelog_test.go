@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/cosmos/iavl"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/proto"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/proto"
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/wal"
 )

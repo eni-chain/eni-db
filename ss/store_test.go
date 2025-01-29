@@ -7,15 +7,15 @@ import (
 	"testing"
 
 	"github.com/cosmos/iavl"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
 	"github.com/stretchr/testify/require"
 )
 
 func TestNewStateStore(t *testing.T) {
 	tempDir := os.TempDir()
-	homeDir := filepath.Join(tempDir, "seidb")
+	homeDir := filepath.Join(tempDir, "enidb")
 	ssConfig := config.StateStoreConfig{
 		DedicatedChangelog: true,
 		Backend:            string(PebbleDBBackend),

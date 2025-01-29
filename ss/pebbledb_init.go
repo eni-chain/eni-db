@@ -1,10 +1,10 @@
 package ss
 
 import (
-	"github.com/sei-protocol/sei-db/common/utils"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/ss/pebbledb"
-	"github.com/sei-protocol/sei-db/ss/types"
+	"github.com/eni-chain/eni-db/common/utils"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/ss/pebbledb"
+	"github.com/eni-chain/eni-db/ss/types"
 )
 
 func init() {

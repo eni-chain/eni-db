@@ -13,13 +13,13 @@ import (
 	"github.com/armon/go-metrics"
 	"github.com/cockroachdb/pebble"
 	"github.com/cockroachdb/pebble/bloom"
-	errorutils "github.com/sei-protocol/sei-db/common/errors"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/common/utils"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/ss/types"
-	"github.com/sei-protocol/sei-db/stream/changelog"
+	errorutils "github.com/eni-chain/eni-db/common/errors"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/common/utils"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/ss/types"
+	"github.com/eni-chain/eni-db/stream/changelog"
 	"golang.org/x/exp/slices"
 )
 
@@ -628,7 +628,7 @@ func (db *Database) RawImport(ch <-chan types.RawSnapshotNode) error {
 
 				if counter%1000000 == 0 {
 					fmt.Printf("Time taken to write batch counter %d: %v\n", counter, time.Since(startTime))
-					metrics.IncrCounterWithLabels([]string{"sei", "migration", "nodes_imported"}, float32(1000000), []metrics.Label{
+					metrics.IncrCounterWithLabels([]string{"eni", "migration", "nodes_imported"}, float32(1000000), []metrics.Label{
 						{Name: "module", Value: latestModule},
 					})
 				}

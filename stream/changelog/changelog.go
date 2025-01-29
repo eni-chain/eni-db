@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"time"
 
-	errorutils "github.com/sei-protocol/sei-db/common/errors"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/stream/types"
+	errorutils "github.com/eni-chain/eni-db/common/errors"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/stream/types"
 	"github.com/tidwall/wal"
 )
 

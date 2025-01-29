@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/sc/memiavl"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/sc/memiavl"
 	"github.com/spf13/cobra"
 )
 

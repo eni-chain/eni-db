@@ -5,8 +5,8 @@ import (
 	"sync"
 
 	"github.com/cosmos/iavl"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/ss/types"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/ss/types"
 	"github.com/stretchr/testify/suite"
 	"golang.org/x/exp/slices"
 )

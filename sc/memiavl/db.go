@@ -14,13 +14,13 @@ import (
 
 	"github.com/alitto/pond"
 	"github.com/cosmos/iavl"
-	errorutils "github.com/sei-protocol/sei-db/common/errors"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/common/utils"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/stream/changelog"
-	"github.com/sei-protocol/sei-db/stream/types"
+	errorutils "github.com/eni-chain/eni-db/common/errors"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/common/utils"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/stream/changelog"
+	"github.com/eni-chain/eni-db/stream/types"
 )
 
 const LockFileName = "LOCK"

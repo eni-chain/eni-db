@@ -3,8 +3,8 @@ package memiavl
 import (
 	"os"
 
+	"github.com/eni-chain/eni-db/common/errors"
 	"github.com/ledgerwatch/erigon-lib/mmap"
-	"github.com/sei-protocol/sei-db/common/errors"
 )
 
 // MmapFile manage the resources of a mmap-ed file

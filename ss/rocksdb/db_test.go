@@ -6,9 +6,9 @@ package rocksdb
 import (
 	"testing"
 
-	"github.com/sei-protocol/sei-db/config"
-	sstest "github.com/sei-protocol/sei-db/ss/test"
-	"github.com/sei-protocol/sei-db/ss/types"
+	"github.com/eni-chain/eni-db/config"
+	sstest "github.com/eni-chain/eni-db/ss/test"
+	"github.com/eni-chain/eni-db/ss/types"
 	"github.com/stretchr/testify/suite"
 )
 

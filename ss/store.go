@@ -3,13 +3,13 @@ package ss
 import (
 	"fmt"
 
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/common/utils"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/ss/pruning"
-	"github.com/sei-protocol/sei-db/ss/types"
-	"github.com/sei-protocol/sei-db/stream/changelog"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/common/utils"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/ss/pruning"
+	"github.com/eni-chain/eni-db/ss/types"
+	"github.com/eni-chain/eni-db/stream/changelog"
 )
 
 type BackendType string

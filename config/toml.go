@@ -1,13 +1,13 @@
 package config
 
-// DefaultConfigTemplate defines the configuration template for the seiDB configuration
+// DefaultConfigTemplate defines the configuration template for the eniDB configuration
 const DefaultConfigTemplate = `
 #############################################################################
-###                             SeiDB Configuration                       ###
+###                             EniDB Configuration                       ###
 #############################################################################
 
 [state-commit]
-# Enable defines if the SeiDB should be enabled to override existing IAVL db backend.
+# Enable defines if the EniDB should be enabled to override existing IAVL db backend.
 sc-enable = {{ .StateCommit.Enable }}
 
 # Defines the SC store directory, if not explicitly set, default to application home directory
@@ -35,7 +35,7 @@ sc-snapshot-writer-limit = {{ .StateCommit.SnapshotWriterLimit }}
 [state-store]
 # Enable defines whether the state-store should be enabled for storing historical data.
 # Supporting historical queries or exporting state snapshot requires setting this to true
-# This config only take effect when SeiDB is enabled (sc-enable = true)
+# This config only take effect when EniDB is enabled (sc-enable = true)
 ss-enable = {{ .StateStore.Enable }}
 
 # Defines the directory to store the state store db files

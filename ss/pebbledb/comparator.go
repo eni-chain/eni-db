@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"github.com/cockroachdb/pebble"
-	"github.com/sei-protocol/sei-db/common/utils"
+	"github.com/eni-chain/eni-db/common/utils"
 )
 
 // MVCCComparer returns a PebbleDB Comparer with encoding and decoding routines

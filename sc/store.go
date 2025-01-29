@@ -3,12 +3,12 @@ package sc
 import (
 	"fmt"
 
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/common/utils"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/sc/memiavl"
-	"github.com/sei-protocol/sei-db/sc/types"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/common/utils"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/sc/memiavl"
+	"github.com/eni-chain/eni-db/sc/types"
 )
 
 var _ types.Committer = (*CommitStore)(nil)
@@ -65,7 +65,7 @@ func (cs *CommitStore) Rollback(targetVersion int64) error {
 
 // copyExisting is for creating new memiavl object given existing folder
 func (cs *CommitStore) LoadVersion(targetVersion int64, copyExisting bool) (types.Committer, error) {
-	cs.logger.Info(fmt.Sprintf("SeiDB load target memIAVL version %d, copyExisting = %v\n", targetVersion, copyExisting))
+	cs.logger.Info(fmt.Sprintf("EniDB load target memIAVL version %d, copyExisting = %v\n", targetVersion, copyExisting))
 	if copyExisting {
 		opts := cs.opts
 		opts.ReadOnly = copyExisting

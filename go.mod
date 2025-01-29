@@ -1,6 +1,6 @@
-module github.com/sei-protocol/sei-db
+module github.com/eni-chain/eni-db
 
-go 1.19
+go 1.22
 
 require (
 	github.com/alitto/pond v1.8.3
@@ -94,7 +94,7 @@ require (
 )
 
 replace (
-	github.com/cosmos/iavl => github.com/sei-protocol/sei-iavl v0.1.8-0.20230726213826-031d03d26f2d
+	github.com/cosmos/iavl => github.com/eni-chain/eni-iavl v0.0.1
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-	github.com/tendermint/tm-db => github.com/sei-protocol/tm-db v0.0.4
+	github.com/tendermint/tm-db => github.com/eni-chain/tm-db v0.0.1
 )

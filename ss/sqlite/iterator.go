@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/sei-protocol/sei-db/ss/types"
+	"github.com/eni-chain/eni-db/ss/types"
 	"golang.org/x/exp/slices"
 	// _ Import to register sqlite driver with database/sql.
 	_ "modernc.org/sqlite"

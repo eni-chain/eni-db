@@ -6,8 +6,8 @@ package rocksdb
 import (
 	"bytes"
 
+	"github.com/eni-chain/eni-db/ss/types"
 	"github.com/linxGnu/grocksdb"
-	"github.com/sei-protocol/sei-db/ss/types"
 )
 
 var _ types.DBIterator = (*iterator)(nil)

@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"path/filepath"
 
-	errorutils "github.com/sei-protocol/sei-db/common/errors"
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/sc/types"
+	errorutils "github.com/eni-chain/eni-db/common/errors"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/sc/types"
 )
 
 // exportBufferSize is the number of nodes to buffer in the exporter. It improves throughput by

@@ -9,12 +9,12 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/eni-chain/eni-db/common/errors"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/proto"
+	"github.com/eni-chain/eni-db/ss/types"
+	"github.com/eni-chain/eni-db/ss/util"
 	"github.com/linxGnu/grocksdb"
-	"github.com/sei-protocol/sei-db/common/errors"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/proto"
-	"github.com/sei-protocol/sei-db/ss/types"
-	"github.com/sei-protocol/sei-db/ss/util"
 	"golang.org/x/exp/slices"
 )
 

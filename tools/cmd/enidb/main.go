@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/sei-protocol/sei-db/tools/cmd/seidb/benchmark"
-	"github.com/sei-protocol/sei-db/tools/cmd/seidb/operations"
+	"github.com/eni-chain/eni-db/tools/cmd/enidb/benchmark"
+	"github.com/eni-chain/eni-db/tools/cmd/enidb/operations"
 	"github.com/spf13/cobra"
 )
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "seidb",
+		Use:   "enidb",
 		Short: "A tool to generate raw key value data from a node as well as benchmark different backends",
 	}
 

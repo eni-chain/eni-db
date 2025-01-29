@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/sei-protocol/sei-db/tools/utils"
+	"github.com/eni-chain/eni-db/tools/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +18,7 @@ func GenerateCmd() *cobra.Command {
 		Run:   generate,
 	}
 
-	generateCmd.PersistentFlags().StringP("leveldb-dir", "l", "/root/.sei/data/application.db", "Level db dir")
+	generateCmd.PersistentFlags().StringP("leveldb-dir", "l", "/root/.eni/data/application.db", "Level db dir")
 	generateCmd.PersistentFlags().StringP("output-dir", "o", "", "Output Directory")
 	generateCmd.PersistentFlags().StringP("modules", "m", "", "Comma separated modules to export")
 	generateCmd.PersistentFlags().IntP("version", "v", 0, "Database Version")

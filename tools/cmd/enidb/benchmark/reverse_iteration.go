@@ -3,10 +3,10 @@ package benchmark
 import (
 	"fmt"
 
-	"github.com/sei-protocol/sei-db/common/logger"
-	"github.com/sei-protocol/sei-db/config"
-	"github.com/sei-protocol/sei-db/ss"
-	"github.com/sei-protocol/sei-db/tools/dbbackend"
+	"github.com/eni-chain/eni-db/common/logger"
+	"github.com/eni-chain/eni-db/config"
+	"github.com/eni-chain/eni-db/ss"
+	"github.com/eni-chain/eni-db/tools/dbbackend"
 	"github.com/spf13/cobra"
 )
 

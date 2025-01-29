@@ -3,7 +3,7 @@ package types
 import (
 	"io"
 
-	"github.com/sei-protocol/sei-db/proto"
+	"github.com/eni-chain/eni-db/proto"
 )
 
 // StateStore is a versioned, embedded Key-Value Store,
