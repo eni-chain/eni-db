@@ -3,8 +3,8 @@ package memiavl
 import (
 	"bytes"
 
+	dbm "github.com/cometbft/cometbft-db"
 	"github.com/eni-chain/eni-db/common/utils"
-	dbm "github.com/tendermint/tm-db"
 )
 
 var _ dbm.Iterator = (*Iterator)(nil)

@@ -13,8 +13,8 @@ import (
 	"sync"
 	"time"
 
+	dbm "github.com/cometbft/cometbft-db"
 	"github.com/cosmos/iavl"
-	dbm "github.com/tendermint/tm-db"
 )
 
 const (
@@ -57,11 +57,9 @@ func ReadTree(db dbm.DB, version int, prefix []byte) (*iavl.MutableTree, error) 
 		db = dbm.NewPrefixDB(db, prefix)
 	}
 
-	tree, err := iavl.NewMutableTree(db, DefaultCacheSize, true)
-	if err != nil {
-		return nil, err
-	}
-	_, err = tree.LoadVersion(int64(version))
+	tree := iavl.NewMutableTree(db, DefaultCacheSize, true, iavl.NewNopLogger())
+
+	_, err := tree.LoadVersion(int64(version))
 	return tree, err
 }
 
