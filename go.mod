@@ -6,8 +6,8 @@ require (
 	github.com/alitto/pond v1.8.3
 	github.com/armon/go-metrics v0.4.1
 	github.com/cockroachdb/pebble v0.0.0-20230819001538-1798fbf5956c
-	github.com/confio/ics23/go v0.9.0
 	github.com/cosmos/iavl v0.21.0-alpha.1.0.20230904092046-df3db2d96583
+	github.com/cosmos/ics23/go v0.11.0
 	github.com/gogo/protobuf v1.3.3
 	github.com/ledgerwatch/erigon-lib v0.0.0-20230210071639-db0e7ed11263
 	github.com/linxGnu/grocksdb v1.8.4
@@ -32,6 +32,8 @@ require (
 	github.com/cockroachdb/redact v1.0.8 // indirect
 	github.com/cockroachdb/sentry-go v0.6.1-cockroachdb.2 // indirect
 	github.com/cockroachdb/tokenbucket v0.0.0-20230807174530-cc333fc44b06 // indirect
+	github.com/confio/ics23/go v0.9.0 // indirect
+	github.com/cosmos/gogoproto v1.7.0 // indirect
 	github.com/cosmos/gorocksdb v1.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/dgraph-io/badger/v3 v3.2103.2 // indirect
@@ -45,6 +47,7 @@ require (
 	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/btree v1.1.2 // indirect
 	github.com/google/flatbuffers v1.12.1 // indirect
+	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/go-immutable-radix v1.3.1 // indirect
 	github.com/hashicorp/golang-lru v0.5.5-0.20210104140557-80c98217689d // indirect
@@ -74,13 +77,13 @@ require (
 	github.com/tidwall/tinylru v1.1.0 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	go.opencensus.io v0.23.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/crypto v0.26.0 // indirect
 	golang.org/x/mod v0.11.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.21.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.13.0 // indirect
+	golang.org/x/sys v0.23.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	lukechampine.com/uint128 v1.2.0 // indirect
 	modernc.org/cc/v3 v3.40.0 // indirect
