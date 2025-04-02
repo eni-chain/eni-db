@@ -56,8 +56,8 @@ func ReadTree(db dbm.DB, version int, prefix []byte) (*iavl.MutableTree, error) 
 	if len(prefix) != 0 {
 		db = dbm.NewPrefixDB(db, prefix)
 	}
-
-	tree := iavl.NewMutableTree(db, DefaultCacheSize, true, iavl.NewNopLogger())
+	db2 := NewWrapDB(db)
+	tree := iavl.NewMutableTree(db2, DefaultCacheSize, true, iavl.NewNopLogger())
 
 	_, err := tree.LoadVersion(int64(version))
 	return tree, err

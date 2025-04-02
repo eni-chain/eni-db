@@ -70,13 +70,13 @@ func GenerateData(dbDir string, modules []string, outputDir string, version int,
 			fmt.Fprintf(os.Stderr, "Error reading data: %s\n", err)
 			return
 		}
-		treeHash, err := tree.Hash()
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "Error hashing tree: %s\n", err)
-			return
-		}
+		treeHash := tree.Hash()
+		//if err != nil {
+		//	fmt.Fprintf(os.Stderr, "Error hashing tree: %s\n", err)
+		//	return
+		//}
 
-		fmt.Printf("Tree hash is %X, tree size is %d\n", treeHash, tree.ImmutableTree().Size())
+		fmt.Printf("Tree hash is %X, tree size is %d\n", treeHash, tree.ImmutableTree.Size())
 
 		outputFileNamePattern := filepath.Join(outputDir, module)
 		utils.WriteTreeDataToFile(tree, outputFileNamePattern, chunkSize)
