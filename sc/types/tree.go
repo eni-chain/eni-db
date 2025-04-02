@@ -3,7 +3,7 @@ package types
 import (
 	"io"
 
-	ics23 "github.com/confio/ics23/go"
+	ics23 "github.com/cosmos/ics23/go"
 	dbm "github.com/tendermint/tm-db"
 )
 

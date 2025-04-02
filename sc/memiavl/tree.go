@@ -7,8 +7,8 @@ import (
 	"math"
 	"sync"
 
-	ics23 "github.com/confio/ics23/go"
 	"github.com/cosmos/iavl"
+	ics23 "github.com/cosmos/ics23/go"
 	"github.com/eni-chain/eni-db/common/utils"
 	"github.com/eni-chain/eni-db/sc/types"
 	dbm "github.com/tendermint/tm-db"
