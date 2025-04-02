@@ -7,11 +7,11 @@ import (
 	"math"
 	"sync"
 
+	dbm "github.com/cometbft/cometbft-db"
 	"github.com/cosmos/iavl"
 	ics23 "github.com/cosmos/ics23/go"
 	"github.com/eni-chain/eni-db/common/utils"
 	"github.com/eni-chain/eni-db/sc/types"
-	dbm "github.com/tendermint/tm-db"
 )
 
 var _ types.Tree = (*Tree)(nil)

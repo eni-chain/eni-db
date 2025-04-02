@@ -3,8 +3,8 @@ package types
 import (
 	"io"
 
+	dbm "github.com/cometbft/cometbft-db"
 	ics23 "github.com/cosmos/ics23/go"
-	dbm "github.com/tendermint/tm-db"
 )
 
 type Tree interface {
