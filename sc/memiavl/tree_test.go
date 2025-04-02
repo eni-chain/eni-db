@@ -8,6 +8,7 @@ import (
 
 	db "github.com/cometbft/cometbft-db"
 	"github.com/cosmos/iavl"
+	"github.com/eni-chain/eni-db/tools/utils"
 	"github.com/stretchr/testify/require"
 )
 
@@ -60,10 +61,11 @@ func init() {
 
 	// generate ref hashes with ref impl
 	d := db.NewMemDB()
-	refTree, err := iavl.NewMutableTree(d, 0, true)
-	if err != nil {
-		panic(err)
-	}
+	d2 := utils.NewWrapDB(d)
+	refTree := iavl.NewMutableTree(d2, 0, true, iavl.NewNopLogger())
+	//if err != nil {
+	//	panic(err)
+	//}
 	for _, changes := range ChangeSets {
 		if err := applyChangeSetRef(refTree, changes); err != nil {
 			panic(err)
