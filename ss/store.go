@@ -21,6 +21,7 @@ const (
 
 	// PebbleDBBackend represents pebbledb
 	PebbleDBBackend BackendType = "pebbledb"
+	LevelDBBackend  BackendType = "leveldb"
 
 	// SQLiteBackend represents sqlite
 	SQLiteBackend BackendType = "sqlite"
