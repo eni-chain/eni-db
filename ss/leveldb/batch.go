@@ -18,7 +18,7 @@ func NewBatch(storage *leveldb.DB, version int64) (*Batch, error) {
 	binary.LittleEndian.PutUint64(versionBz[:], uint64(version))
 
 	batch := new(leveldb.Batch)
-	batch.Put([]byte("latestVersion"), versionBz[:])
+	batch.Put([]byte(latestVersionKey), versionBz[:])
 
 	return &Batch{
 		storage: storage,

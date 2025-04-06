@@ -14,7 +14,8 @@ import (
 )
 
 const (
-	VersionSize = 8
+	VersionSize      = 8
+	latestVersionKey = "latestVersion"
 )
 
 var (
@@ -80,7 +81,7 @@ func (db *Database) RawIterate(storeKey string, fn func([]byte, []byte, int64) b
 }
 
 func (db *Database) GetLatestVersion() (int64, error) {
-	bz, err := db.storage.Get([]byte("latestVersion"), nil)
+	bz, err := db.storage.Get([]byte(latestVersionKey), nil)
 	if err != nil {
 		if errors.Is(err, leveldb.ErrNotFound) {
 			return 0, nil
@@ -96,7 +97,7 @@ func (db *Database) GetLatestVersion() (int64, error) {
 func (db *Database) SetLatestVersion(version int64) error {
 	var ts [VersionSize]byte
 	binary.LittleEndian.PutUint64(ts[:], uint64(version))
-	return db.storage.Put([]byte("latestVersion"), ts[:], nil)
+	return db.storage.Put([]byte(latestVersionKey), ts[:], nil)
 }
 
 func (db *Database) GetEarliestVersion() (int64, error) {
@@ -140,16 +141,25 @@ func (db *Database) SetLatestMigratedModule(module string) error {
 }
 
 func (db *Database) ApplyChangeset(version int64, cs *proto.NamedChangeSet) error {
-	batch := new(leveldb.Batch)
+	batch, err := NewBatch(db.storage, version)
+	if err != nil {
+		return err
+	}
 	for _, change := range cs.Changeset.Pairs {
 		key := append([]byte(cs.Name), change.Key...)
 		if change.Delete {
-			batch.Delete(key)
+			err = batch.Delete(cs.Name, key)
+			if err != nil {
+				return err
+			}
 		} else {
-			batch.Put(key, change.Value)
+			err = batch.Set(cs.Name, key, change.Value)
+			if err != nil {
+				return err
+			}
 		}
 	}
-	return db.storage.Write(batch, nil)
+	return batch.Write()
 }
 
 func (db *Database) ApplyChangesetAsync(version int64, changesets []*proto.NamedChangeSet) error {
