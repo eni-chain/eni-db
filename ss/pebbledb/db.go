@@ -92,7 +92,7 @@ func New(dataDir string, config config.StateStoreConfig) (*Database, error) {
 		l.FilterPolicy = bloom.FilterPolicy(10)
 		l.FilterType = pebble.TableFilter
 		// TODO: Consider compression only for specific layers like bottommost
-		l.Compression = pebble.ZstdCompression
+		l.Compression = pebble.NoCompression
 		if i > 0 {
 			l.TargetFileSize = opts.Levels[i-1].TargetFileSize * 2
 		}
