@@ -46,7 +46,11 @@ func (db *Database) Get(storeKey string, version int64, key []byte) ([]byte, err
 	if len(key) == 0 {
 		return nil, errKeyEmpty
 	}
-	return db.storage.Get(append([]byte(storeKey), key...), nil)
+	res, err := db.storage.Get(append([]byte(storeKey), key...), nil)
+	if err != nil && errors.Is(err, leveldb.ErrNotFound) {
+		return nil, nil
+	}
+	return res, err
 }
 
 func (db *Database) Has(storeKey string, version int64, key []byte) (bool, error) {
@@ -146,14 +150,13 @@ func (db *Database) ApplyChangeset(version int64, cs *proto.NamedChangeSet) erro
 		return err
 	}
 	for _, change := range cs.Changeset.Pairs {
-		key := append([]byte(cs.Name), change.Key...)
 		if change.Delete {
-			err = batch.Delete(cs.Name, key)
+			err = batch.Delete(cs.Name, change.Key)
 			if err != nil {
 				return err
 			}
 		} else {
-			err = batch.Set(cs.Name, key, change.Value)
+			err = batch.Set(cs.Name, change.Key, change.Value)
 			if err != nil {
 				return err
 			}
