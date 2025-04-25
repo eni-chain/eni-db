@@ -3,6 +3,7 @@ module github.com/eni-chain/eni-db
 go 1.23.6
 
 require (
+	cosmossdk.io/core v0.12.1-0.20240725072823-6a2d039e1212
 	github.com/alitto/pond v1.8.3
 	github.com/armon/go-metrics v0.4.1
 	github.com/cockroachdb/pebble v1.1.4
@@ -14,6 +15,7 @@ require (
 	github.com/linxGnu/grocksdb v1.9.8
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.10.0
+	github.com/syndtr/goleveldb v1.0.1-0.20220721030215-126854af5e6d
 	github.com/tidwall/btree v1.6.0
 	github.com/tidwall/gjson v1.10.2
 	github.com/tidwall/wal v1.1.7
@@ -23,7 +25,6 @@ require (
 )
 
 require (
-	cosmossdk.io/core v0.12.1-0.20240725072823-6a2d039e1212 // indirect
 	github.com/DataDog/zstd v1.5.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -66,7 +67,6 @@ require (
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/rogpeppe/go-internal v1.13.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
-	github.com/syndtr/goleveldb v1.0.1-0.20220721030215-126854af5e6d // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tidwall/tinylru v1.1.0 // indirect

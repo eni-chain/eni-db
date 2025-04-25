@@ -3,7 +3,9 @@ package leveldb
 import (
 	"bytes"
 
+	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/iterator"
+	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 type Iterator struct {
@@ -14,10 +16,13 @@ type Iterator struct {
 	reverse bool
 }
 
-func NewIterator(source iterator.Iterator, prefix []byte, version int64, reverse bool) *Iterator {
+func NewIterator(db *leveldb.DB, storeKey string, version int64, start, end []byte, reverse bool) *Iterator {
+	startIter := append([]byte(storeKey), start...)
+	endIter := append([]byte(storeKey), end...)
+	source := db.NewIterator(&util.Range{Start: startIter, Limit: endIter}, nil)
 	return &Iterator{
 		source:  source,
-		prefix:  prefix,
+		prefix:  []byte(storeKey),
 		version: version,
 		valid:   true,
 		reverse: reverse,

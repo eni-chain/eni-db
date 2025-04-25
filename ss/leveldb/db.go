@@ -61,14 +61,12 @@ func (db *Database) Has(storeKey string, version int64, key []byte) (bool, error
 }
 
 func (db *Database) Iterator(storeKey string, version int64, start, end []byte) (types.DBIterator, error) {
-	iter := db.storage.NewIterator(&util.Range{Start: append([]byte(storeKey), start...), Limit: append([]byte(storeKey), end...)}, nil)
-	return &Iterator{source: iter}, nil
+	return NewIterator(db.storage, []byte(storeKey), version, start, end, false), nil
 }
 
 func (db *Database) ReverseIterator(storeKey string, version int64, start, end []byte) (types.DBIterator, error) {
-	iter := db.storage.NewIterator(&util.Range{Start: append([]byte(storeKey), start...), Limit: append([]byte(storeKey), end...)}, nil)
-	iter.Last()
-	return &Iterator{source: iter, reverse: true}, nil
+	return NewIterator(db.storage, []byte(storeKey), version, start, end, true), nil
+
 }
 
 func (db *Database) RawIterate(storeKey string, fn func([]byte, []byte, int64) bool) (bool, error) {
@@ -149,6 +147,7 @@ func (db *Database) ApplyChangeset(version int64, cs *proto.NamedChangeSet) erro
 	if err != nil {
 		return err
 	}
+	defer batch.Reset()
 	for _, change := range cs.Changeset.Pairs {
 		if change.Delete {
 			err = batch.Delete(cs.Name, change.Key)
