@@ -11,26 +11,58 @@ import (
 type Iterator struct {
 	source  iterator.Iterator
 	prefix  []byte
+	start   []byte
+	end     []byte
 	version int64
 	valid   bool
 	reverse bool
 }
 
-func NewIterator(db *leveldb.DB, storeKey string, version int64, start, end []byte, reverse bool) *Iterator {
-	startIter := append([]byte(storeKey), start...)
-	endIter := append([]byte(storeKey), end...)
+func newIterator(db *leveldb.DB, storeKey string, version int64, start, end []byte, reverse bool) *Iterator {
+	prefixBytes := []byte(storeKey)
+	startIter := append([]byte(nil), prefixBytes...)
+	if start != nil {
+		startIter = append(startIter, start...)
+	}
+
+	var endIter []byte
+	if end != nil {
+		endIter = append(append([]byte(nil), prefixBytes...), end...)
+	}
+
 	source := db.NewIterator(&util.Range{Start: startIter, Limit: endIter}, nil)
+
+	// initialize the iterator
+	if reverse {
+		if end == nil {
+			source.Last()
+		} else {
+			source.Seek(endIter)
+			if source.Valid() {
+				source.Prev()
+			} else {
+				source.Last()
+			}
+		}
+	} else {
+		source.First()
+	}
+
+	valid := source.Valid()
+
 	return &Iterator{
 		source:  source,
-		prefix:  []byte(storeKey),
+		prefix:  prefixBytes,
+		start:   start,
+		end:     end,
 		version: version,
-		valid:   true,
+		valid:   valid,
 		reverse: reverse,
 	}
 }
 
 func (itr *Iterator) Domain() (start []byte, end []byte) {
-	return itr.prefix, nil
+	return itr.start, itr.end
 }
 
 func (itr *Iterator) Valid() bool {
@@ -44,20 +76,33 @@ func (itr *Iterator) Valid() bool {
 		return false
 	}
 
-	if end := itr.prefix; end != nil {
-		if bytes.Compare(end, itr.Key()) <= 0 {
-			itr.valid = false
-			return false
-		}
+	// check if the key has the correct prefix
+	if !bytes.HasPrefix(itr.source.Key(), itr.prefix) {
+		itr.valid = false
+		return false
+	}
+
+	// get the key
+	key := itr.Key()
+
+	// check if the key is within the start and end range
+	if itr.start != nil && bytes.Compare(key, itr.start) < 0 {
+		itr.valid = false
+		return false
+	}
+	if itr.end != nil && bytes.Compare(key, itr.end) >= 0 {
+		itr.valid = false
+		return false
 	}
 
 	return true
 }
 
 func (itr *Iterator) Key() (key []byte) {
-	return itr.source.Key()
+	fullKey := itr.source.Key()
+	// remove the prefix
+	return fullKey[len(itr.prefix):]
 }
-
 func (itr *Iterator) Value() (value []byte) {
 	return itr.source.Value()
 }
