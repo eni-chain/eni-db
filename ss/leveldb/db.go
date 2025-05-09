@@ -14,8 +14,11 @@ import (
 )
 
 const (
-	VersionSize      = 8
-	latestVersionKey = "latestVersion"
+	VersionSize          = 8
+	latestVersionKey     = "latestVersion"
+	latestMigratedKey    = "latestMigratedKey"
+	latestMigratedModule = "latestMigratedModule"
+	earliestVersion      = "earliestVersion"
 )
 
 var (
@@ -179,7 +182,7 @@ func (db *Database) SetLatestVersion(version int64) error {
 }
 
 func (db *Database) GetEarliestVersion() (int64, error) {
-	bz, err := db.storage.Get([]byte("earliestVersion"), nil)
+	bz, err := db.storage.Get([]byte(earliestVersion), nil)
 	if err != nil {
 		if errors.Is(err, leveldb.ErrNotFound) {
 			return 0, nil
@@ -195,31 +198,36 @@ func (db *Database) GetEarliestVersion() (int64, error) {
 func (db *Database) SetEarliestVersion(version int64, ignoreVersion bool) error {
 	var ts [VersionSize]byte
 	binary.LittleEndian.PutUint64(ts[:], uint64(version))
-	return db.storage.Put([]byte("earliestVersion"), ts[:], nil)
+	return db.storage.Put([]byte(earliestVersion), ts[:], nil)
 }
 
 func (db *Database) GetLatestMigratedKey() ([]byte, error) {
-	return db.storage.Get([]byte("latestMigratedKey"), nil)
+	value, err := db.storage.Get([]byte(latestMigratedKey), nil)
+	if err != nil && errors.Is(err, leveldb.ErrNotFound) {
+		return nil, nil
+	}
+
+	return value, err
 }
 
 func (db *Database) SetLatestMigratedKey(key []byte) error {
-	return db.storage.Put([]byte("latestMigratedKey"), key, nil)
+	return db.storage.Put([]byte(latestMigratedKey), key, nil)
 }
 
 func (db *Database) GetLatestMigratedModule() (string, error) {
-	bz, err := db.storage.Get([]byte("latestMigratedModule"), nil)
-	if err != nil {
-		return "", err
+	bz, err := db.storage.Get([]byte(latestMigratedModule), nil)
+	if err != nil && errors.Is(err, leveldb.ErrNotFound) {
+		return "", nil
 	}
 	return string(bz), nil
 }
 
 func (db *Database) SetLatestMigratedModule(module string) error {
-	return db.storage.Put([]byte("latestMigratedModule"), []byte(module), nil)
+	return db.storage.Put([]byte(latestMigratedModule), []byte(module), nil)
 }
 
 func (db *Database) ApplyChangeset(version int64, cs *proto.NamedChangeSet) error {
-	batch, err := NewBatch(db.storage, version)
+	batch, err := newBatch(db.storage, version)
 	if err != nil {
 		return err
 	}

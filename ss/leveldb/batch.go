@@ -13,7 +13,7 @@ type Batch struct {
 	version int64
 }
 
-func NewBatch(storage *leveldb.DB, version int64) (*Batch, error) {
+func newBatch(storage *leveldb.DB, version int64) (*Batch, error) {
 	var versionBz [VersionSize]byte
 	binary.LittleEndian.PutUint64(versionBz[:], uint64(version))
 

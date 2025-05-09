@@ -182,3 +182,103 @@ func TestDatabase_Get(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, newValue, res)
 }
+
+func TestDatabase_LatestVersion(t *testing.T) {
+	tempDir := t.TempDir()
+
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	require.NoError(t, err)
+	defer db.Close()
+
+	// Test GetLatestVersion when no version is set
+	version, err := db.GetLatestVersion()
+	require.NoError(t, err)
+	require.Equal(t, int64(0), version)
+
+	// Test SetLatestVersion
+	err = db.SetLatestVersion(10)
+	require.NoError(t, err)
+
+	// Verify GetLatestVersion
+	version, err = db.GetLatestVersion()
+	require.NoError(t, err)
+	require.Equal(t, int64(10), version)
+}
+
+func TestDatabase_EarliestVersion(t *testing.T) {
+	tempDir := t.TempDir()
+
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	require.NoError(t, err)
+	defer db.Close()
+
+	// Test GetEarliestVersion when no version is set
+	version, err := db.GetEarliestVersion()
+	require.NoError(t, err)
+	require.Equal(t, int64(0), version)
+
+	// Test SetEarliestVersion
+	err = db.SetEarliestVersion(5, false)
+	require.NoError(t, err)
+
+	// Verify GetEarliestVersion
+	version, err = db.GetEarliestVersion()
+	require.NoError(t, err)
+	require.Equal(t, int64(5), version)
+}
+
+func TestDatabase_LatestMigratedKey(t *testing.T) {
+	tempDir := t.TempDir()
+
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	require.NoError(t, err)
+	defer db.Close()
+
+	// Test GetLatestMigratedKey when no key is set
+	key, err := db.GetLatestMigratedKey()
+	require.NoError(t, err)
+	require.Nil(t, key)
+
+	// Test SetLatestMigratedKey
+	err = db.SetLatestMigratedKey([]byte("migratedKey"))
+	require.NoError(t, err)
+
+	// Verify GetLatestMigratedKey
+	key, err = db.GetLatestMigratedKey()
+	require.NoError(t, err)
+	require.Equal(t, []byte("migratedKey"), key)
+}
+
+func TestDatabase_LatestMigratedModule(t *testing.T) {
+	tempDir := t.TempDir()
+
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	require.NoError(t, err)
+	defer db.Close()
+
+	// Test GetLatestMigratedModule when no module is set
+	module, err := db.GetLatestMigratedModule()
+	require.NoError(t, err)
+	require.Equal(t, "", module)
+
+	// Test SetLatestMigratedModule
+	err = db.SetLatestMigratedModule("testModule")
+	require.NoError(t, err)
+
+	// Verify GetLatestMigratedModule
+	module, err = db.GetLatestMigratedModule()
+	require.NoError(t, err)
+	require.Equal(t, "testModule", module)
+}
+
+func TestDatabase_Prune(t *testing.T) {
+	tempDir := t.TempDir()
+
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	require.NoError(t, err)
+	defer db.Close()
+
+	// Test Prune (currently not implemented, should return nil)
+	err = db.Prune(1)
+	require.NoError(t, err)
+}
