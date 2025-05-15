@@ -43,7 +43,7 @@ ss-enable = {{ .StateStore.Enable }}
 ss-db-directory = "{{ .StateStore.DBDirectory }}"
 
 # DBBackend defines the backend database used for state-store.
-# Supported backends: pebbledb, rocksdb
+# Supported backends: pebbledb, leveldb
 # defaults to pebbledb (recommended)
 ss-backend = "{{ .StateStore.Backend }}"
 
@@ -66,4 +66,6 @@ ss-prune-interval = {{ .StateStore.PruneIntervalSeconds }}
 # defaults to 1
 ss-import-num-workers = {{ .StateStore.ImportNumWorkers }}
 
+# only keep the last version of the state store
+ss-keep-last-version = {{ .StateStore.KeepLastVersion }}
 `

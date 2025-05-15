@@ -40,7 +40,7 @@ func New(dataDir string, config config.StateStoreConfig) (*Database, error) {
 		return nil, fmt.Errorf("failed to open LevelDB: %w", err)
 	}
 	var history *leveldb.DB = nil
-	if config.Enable {
+	if !config.KeepLastVersion {
 		history, err = leveldb.OpenFile(dataDir+"/history", nil)
 		if err != nil {
 			db.Close()
