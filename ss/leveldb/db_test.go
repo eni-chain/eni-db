@@ -49,7 +49,7 @@ func TestIterator(t *testing.T) {
 	tempDir := t.TempDir()
 
 	// Initialize the database
-	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{Enable: true})
 	require.NoError(t, err)
 	defer db.Close()
 
@@ -116,7 +116,7 @@ func TestDatabase_Get(t *testing.T) {
 	tempDir := t.TempDir()
 
 	// Initialize the database
-	db, err := leveldb.New(tempDir, config.StateStoreConfig{})
+	db, err := leveldb.New(tempDir, config.StateStoreConfig{Enable: true})
 	require.NoError(t, err)
 	defer db.Close()
 

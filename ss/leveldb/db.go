@@ -39,10 +39,13 @@ func New(dataDir string, config config.StateStoreConfig) (*Database, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to open LevelDB: %w", err)
 	}
-	history, err := leveldb.OpenFile(dataDir+"/history", nil)
-	if err != nil {
-		db.Close()
-		return nil, fmt.Errorf("failed to open LevelDB history: %w", err)
+	var history *leveldb.DB = nil
+	if config.Enable {
+		history, err = leveldb.OpenFile(dataDir+"/history", nil)
+		if err != nil {
+			db.Close()
+			return nil, fmt.Errorf("failed to open LevelDB history: %w", err)
+		}
 	}
 	d := &Database{
 		storage: db,
@@ -73,7 +76,7 @@ func (db *Database) Get(storeKey string, version int64, key []byte) ([]byte, err
 	}
 	var res []byte
 	var err error
-	if version <= 0 {
+	if version <= 0 || db.history == nil {
 		res, err = db.storage.Get(append([]byte(storeKey), key...), nil)
 	} else {
 		res, err = getFromVersionDb(db.history, append([]byte(storeKey), key...), version)
@@ -107,7 +110,7 @@ func (db *Database) Has(storeKey string, version int64, key []byte) (bool, error
 	if len(key) == 0 {
 		return false, errKeyEmpty
 	}
-	if version <= 0 {
+	if version <= 0 || db.history == nil {
 		return db.storage.Has(append([]byte(storeKey), key...), nil)
 	}
 	return hasFromVersionDb(db.history, append([]byte(storeKey), key...), version)
@@ -135,14 +138,14 @@ func hasFromVersionDb(db *leveldb.DB, key []byte, version int64) (bool, error) {
 }
 
 func (db *Database) Iterator(storeKey string, version int64, start, end []byte) (types.DBIterator, error) {
-	if version <= 0 {
+	if version <= 0 || db.history == nil {
 		return newIterator(db.storage, storeKey, version, start, end, false), nil
 	}
 	return newHisIterator(db.history, storeKey, version, start, end, false), nil
 }
 
 func (db *Database) ReverseIterator(storeKey string, version int64, start, end []byte) (types.DBIterator, error) {
-	if version <= 0 {
+	if version <= 0 || db.history == nil {
 		return newIterator(db.storage, storeKey, version, start, end, true), nil
 	}
 	return newHisIterator(db.history, storeKey, version, start, end, true), nil
@@ -232,43 +235,53 @@ func (db *Database) ApplyChangeset(version int64, cs *proto.NamedChangeSet) erro
 		return err
 	}
 	defer batch.Reset()
-	historyBatch := newHisBatch(db.history, version)
-	defer historyBatch.Reset()
+	var historyBatch *HisBatch
+	if db.history != nil {
+		historyBatch = newHisBatch(db.history, version)
+		defer historyBatch.Reset()
+	}
 	for _, change := range cs.Changeset.Pairs {
 		if change.Delete {
 			err = batch.Delete(cs.Name, change.Key)
 			if err != nil {
 				return err
 			}
-			err = historyBatch.Delete(cs.Name, change.Key)
-			if err != nil {
-				return err
+			if historyBatch != nil {
+				err = historyBatch.Delete(cs.Name, change.Key)
+				if err != nil {
+					return err
+				}
 			}
 		} else {
 			err = batch.Set(cs.Name, change.Key, change.Value)
 			if err != nil {
 				return err
 			}
-			err = historyBatch.Set(cs.Name, change.Key, change.Value)
-			if err != nil {
-				return err
+			if historyBatch != nil {
+				err = historyBatch.Set(cs.Name, change.Key, change.Value)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
 	wg := sync.WaitGroup{}
-	wg.Add(2)
+	wg.Add(1)
 	go func() {
 		defer wg.Done()
 		if err := batch.Write(); err != nil {
 			panic(err)
 		}
 	}()
-	go func() {
-		defer wg.Done()
-		if err := historyBatch.Write(); err != nil {
-			panic(err)
-		}
-	}()
+	if historyBatch != nil {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if err := historyBatch.Write(); err != nil {
+				panic(err)
+			}
+		}()
+	}
 	wg.Wait()
 	return nil
 }

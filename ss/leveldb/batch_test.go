@@ -12,7 +12,7 @@ func TestBatch(t *testing.T) {
 	tempDir := t.TempDir()
 
 	// 初始化LevelDB
-	db, err := New(tempDir, config.StateStoreConfig{})
+	db, err := New(tempDir, config.StateStoreConfig{Enable: false})
 	require.NoError(t, err)
 	defer db.Close()
 
@@ -52,7 +52,7 @@ func TestHisBatch(t *testing.T) {
 	tempDir := t.TempDir()
 
 	// 初始化LevelDB
-	db, err := New(tempDir, config.StateStoreConfig{})
+	db, err := New(tempDir, config.StateStoreConfig{Enable: true})
 	require.NoError(t, err)
 	defer db.Close()
 
